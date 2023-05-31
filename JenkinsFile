@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git branch: 'main', url: 'https://github.wdf.sap.corp/I527238/MavenProject.git'
+                git branch: 'main', url: 'https://github.com/rajnishAnandSAP/MavenProject.git'
                 sh "mvn -f ./pom.xml -Dmaven.test.skip=true clean compile"
             }
             post {
