@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    tools {
+        maven "Maven 3.8.6"
+        jdk "jdk11"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                git branch: 'main', url: 'https://github.wdf.sap.corp/I527238/MavenProject.git'
+                sh "mvn -f ./pom.xml -Dmaven.test.skip=true clean compile"
+            }
+            post {
+                success {
+                    echo "COMPILATION SUCCESSFUL!"
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "mvn -f ./pom.xml test"
+            }
+            post {
+                success {
+                    echo "TEST SUCCESSFUL!"
+                }
+            }
+        }
+        stage('Package') {
+            steps {
+                sh "mvn -f ./pom.xml package"
+            }
+            post {
+                success {
+                    echo "PACKAGE SUCCESSFUL!"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                 echo "DEPLOY"
+            }
+        }
+    }
+}
